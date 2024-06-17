@@ -60,7 +60,7 @@ export default function Content() {
                     alt="garlic"
                     width={80}
                     height={80}
-                    className="relative top-10 -ml-10 max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
+                    className="relative -top-10 -ml-10 max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
                   />
                 </MouseParallaxChild>
                 <MouseParallaxChild factorX={0.1} factorY={0.2}>
@@ -69,7 +69,7 @@ export default function Content() {
                     alt="garlic"
                     width={80}
                     height={80}
-                    className="relative top-10 ml-5  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
+                    className="relative -top-16 ml-5  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
                   />
                 </MouseParallaxChild>
                 <MouseParallaxChild factorX={0.1} factorY={0.2}>
@@ -78,7 +78,7 @@ export default function Content() {
                     alt="garlic"
                     width={80}
                     height={80}
-                    className="relative top-10 -ml-10 max-sm:h-[20px] max-sm:[top-20px] max-lg:top-0"
+                    className="relative -top-20 -ml-10 max-sm:h-[20px] max-sm:[top-20px] max-lg:top-0"
                   />
                 </MouseParallaxChild>
                 <MouseParallaxChild factorX={0.1} factorY={0.3}>
@@ -87,7 +87,7 @@ export default function Content() {
                     alt="chilli"
                     width={80}
                     height={80}
-                    className="relative top-20 -ml-10 max-sm:h-[20px] max-sm:[top-20px] max-lg:top-0"
+                    className="relative -top-12 -ml-10 max-sm:h-[20px] max-sm:[top-20px] max-lg:top-0"
                   />
                 </MouseParallaxChild>
                 <MouseParallaxChild factorX={0.1} factorY={0.3}>
@@ -96,16 +96,16 @@ export default function Content() {
                     alt="chilli"
                     width={80}
                     height={80}
-                    className="relative top-20 -ml-10  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0 "
+                    className="relative -top-8 -ml-10  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0 "
                   />
                 </MouseParallaxChild>
                 <MouseParallaxChild factorX={0.1} factorY={0.2}>
                   <Image
                     src={leaves}
                     alt="leaves"
-                    width={80}
-                    height={80}
-                    className="relative top-24 ml-5  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
+                    width={100}
+                    height={100}
+                    className="relative -top-5 ml-5  max-sm:w-[20px] max-sm:h-[20px] max-lg:top-0"
                   />
                 </MouseParallaxChild>
               </div>

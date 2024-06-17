@@ -3,13 +3,13 @@ import Image from "next/image";
 import Logo from "@/public/Logo.svg";
 export default function Footer() {
   return (
-    <footer className="bg-gray-100 mt-5">
+    <footer className="bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] mt-5 ">
       <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 font-sans">
         <div className="flex justify-center text-teal-600">
           <Image src={Logo} alt="Logo" width={150} height={150} />
         </div>
 
-        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-gray-500">
+        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-white">
           Şehrin En İyİ Pİzzaları Lezzeti Anlatılmaz Yaşanır Güvenilir Temiz Ve
           Taze Pizzalar
         </p>
@@ -17,7 +17,7 @@ export default function Footer() {
         <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
           <li>
             <a
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-white transition hover:text-gray-700/75"
               href="#"
             >
               Hakkımızda
@@ -26,7 +26,7 @@ export default function Footer() {
 
           <li>
             <a
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-white transition hover:text-gray-700/75"
               href="#"
             >
               Bayilerimiz
@@ -35,7 +35,7 @@ export default function Footer() {
 
           <li>
             <a
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-white transition hover:text-gray-700/75"
               href="#"
             >
               İletişim
@@ -44,7 +44,7 @@ export default function Footer() {
 
           <li>
             <a
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-white transition hover:text-gray-700/75"
               href="#"
             >
               Blog
@@ -58,7 +58,7 @@ export default function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-gray-700 transition hover:text-blue-500"
             >
               <span className="sr-only">Facebook</span>
               <svg
@@ -81,7 +81,7 @@ export default function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-gray-700 transition hover:text-red-500"
             >
               <span className="sr-only">Instagram</span>
               <svg
@@ -104,7 +104,7 @@ export default function Footer() {
               href="#"
               rel="noreferrer"
               target="_blank"
-              className="text-gray-700 transition hover:text-gray-700/75"
+              className="text-gray-700 transition hover:text-cyan-600"
             >
               <span className="sr-only">Twitter</span>
               <svg

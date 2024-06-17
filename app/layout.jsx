@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
 import { Inter, Bangers } from "next/font/google";
+import Header from "./Components/Header";
+import Footer from "./Components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -8,18 +9,18 @@ const inter = Inter({
 });
 const bangers = Bangers({ weight: ["400"], subsets: ["latin"] });
 
-export const metadata: Metadata = {
-  title: "Pizza LAND",
+export const metadata = {
+  title: "Pizza Land",
   description: "Şehrin En iyi Pizzaları",
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{ children: React.ReactNode }>) {
+export default function RootLayout({ children }) {
   return (
     <html lang="en">
-      <body className={`${inter.className} ${bangers.className}`}>
+      <body className={`${inter.className} ${bangers.className} `}>
+        <Header />
         {children}
+        <Footer />
       </body>
     </html>
   );
