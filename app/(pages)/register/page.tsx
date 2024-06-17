@@ -1,7 +1,7 @@
 import React from "react";
 import Image from "next/image";
 import Logo from "@/public/pizza-banner.png";
-import Logo1 from "@/public/Logo.svg";
+import Logo1 from "@/public/logo.svg";
 export default function page() {
   return (
     <div>

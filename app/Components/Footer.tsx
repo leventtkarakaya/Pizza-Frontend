@@ -1,6 +1,6 @@
 import React from "react";
 import Image from "next/image";
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/logo.svg";
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] mt-5 ">

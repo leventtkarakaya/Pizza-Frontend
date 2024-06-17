@@ -2,29 +2,11 @@
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import Logo from "@/public/Logo.svg";
+import Logo from "@/public/logo.svg";
 import Bag from "@/public/bag.svg";
 import Modal from "react-modal";
 import { BsXLg } from "react-icons/bs";
-/* const customStyles = {
-  content: {
-    top: "50%",
-    left: "50%",
-    right: "auto",
-    bottom: "auto",
-    marginRight: "-50%",
-    transform: "translate(-50%, -50%)",
-    width: "40%",
-    height: "60%",
-    borderRadius: "10px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    gap: "20px",
-  },
-};
- */
+
 Modal.setAppElement("body");
 export default function Header() {
   const [modalIsOpen, setIsOpen] = useState(false);
