@@ -25,7 +25,7 @@ export default function Header() {
         <Link href="/">
           <Image src={Logo} alt="Logo" width={100} height={100} />
         </Link>
-        <div className="flex items-center text-white  cursor-pointer gap-12 ">
+        <div className="flex items-center gap-12 text-white cursor-pointer ">
           <Link
             href="/allFood"
             className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
@@ -52,9 +52,9 @@ export default function Header() {
             <span>Pizza Ekle</span>
           </Link>
           <Link href="/">
-            <div className="relative ">
+            <div className="relative">
               <Image src={Bag} alt="Logo" width={35} height={35} />
-              <span className="absolute top-6 -right-0  w-5 h-5 bg-black text-sm  rounded-full flex justify-center items-center text-white">
+              <span className="absolute flex items-center justify-center w-5 h-5 text-sm text-white bg-black rounded-full top-6 -right-0">
                 0
               </span>
             </div>
@@ -65,7 +65,7 @@ export default function Header() {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="w-14 rounded-full">
+              <div className="rounded-full w-14">
                 <img
                   alt="Tailwind CSS Navbar component"
                   src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
@@ -78,19 +78,19 @@ export default function Header() {
             >
               <li>
                 <a
-                  className="text-black text-lg font-medium font-sans"
+                  className="font-sans text-lg font-medium text-black"
                   onClick={openModal}
                 >
                   Profil
                 </a>
               </li>
               <li>
-                <a className="text-black text-lg font-medium font-sans">
+                <a className="font-sans text-lg font-medium text-black">
                   Ayarlar
                 </a>
               </li>
               <li>
-                <a className="text-black text-lg font-medium font-sans">
+                <a className="font-sans text-lg font-medium text-black">
                   Çıkış
                 </a>
               </li>
@@ -107,7 +107,7 @@ export default function Header() {
           <button onClick={closeModal} className="absolute top-4 right-4">
             <BsXLg size={20} />
           </button>
-          <div className="text-2xl font-sans font-medium mt-5 mb-5">
+          <div className="mt-5 mb-5 font-sans text-2xl font-medium">
             Admin Profil
           </div>
           <form>
@@ -115,17 +115,17 @@ export default function Header() {
               <input
                 type="text"
                 placeholder="E-mail"
-                className="input input-bordered input-md w-full max-w-xs"
+                className="w-full max-w-xs input input-bordered input-md"
               />
               <input
                 type="text"
                 placeholder="Şifre"
-                className="input input-bordered input-md w-full max-w-xs"
+                className="w-full max-w-xs input input-bordered input-md"
               />
               <input
                 type="text"
                 placeholder="Şifre Tekrar"
-                className="input input-bordered input-md w-full max-w-xs"
+                className="w-full max-w-xs input input-bordered input-md"
               />
               <button className="btn font-sans font-medium text-clip bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] text-white">
                 Kaydet

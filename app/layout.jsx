@@ -1,6 +1,6 @@
 import { Inter, Bangers } from "next/font/google";
-import Header from "./Components/Header";
-import Footer from "./Components/Footer";
+import Header from "@/app/Components/Header";
+import Footer from "@/app/Components/Footer";
 import "./globals.css";
 
 const inter = Inter({
@@ -14,10 +14,10 @@ export const metadata = {
   description: "Şehrin En iyi Pizzaları",
 };
 
-export default function RootLayout({ children }) {
+export default function ({ children }) {
   return (
-    <html lang="en">
-      <body className={`${inter.className} ${bangers.className} `}>
+    <html lang="tr">
+      <body className={`${inter.className} ${bangers.className}`}>
         <Header />
         {children}
         <Footer />

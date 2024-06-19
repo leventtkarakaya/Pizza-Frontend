@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import Logo from "@/public/pizza-banner.png";
-import Logo1 from "@/public/logo.svg";
 
 export default function page() {
   const [category, setCategory] = useState(1);
@@ -38,17 +37,18 @@ export default function page() {
       value: "Karışık",
     },
   ];
-  const handleClick = (id: number, value: string) => {
+  const handleClick = (id, value) => {
     setCategory(id);
-    console.log(value);
+
     console.log(id);
+    console.log(value);
   };
   return (
     <>
-      <div className="p-8 rounded border border-gray-200 lg:mt-16 lg:px-20 font-sans flex items-center flex-col">
-        <div className="flex flex-col gap-4 w-full ">
+      <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20">
+        <div className="flex flex-col w-full gap-4 ">
           {/* Pagination */}
-          <div className="flex justify-around btn-nav w-full ">
+          <div className="flex justify-around w-full btn-nav ">
             {Pagination.map((item) => (
               <button
                 key={item.id}
@@ -64,22 +64,22 @@ export default function page() {
             ))}
           </div>
           {/* card */}
-          <div className="grid grid-cols-4 w-full gap-x-28 mt-20 gap-y-10 px-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10  max-sm:px-0 ">
-            <div className="relative flex w-80 flex-col rounded-xl bg-white bg-clip-border text-gray-700 shadow-md">
-              <div className="relative mx-4 -mt-6 h-60 overflow-hidden  rounded-xl bg-blue-gray-500 bg-clip-border text-white shadow-lg shadow-blue-gray-500/40  ">
+          <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 ">
+            <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border">
+              <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
                 <Image
                   src={Logo}
                   alt="quattro stagioni"
                   width={200}
                   height={200}
-                  className="object-cover ml-11 mt-6 "
+                  className="object-cover mt-6 ml-11 "
                 />
               </div>
               <div className="p-6">
-                <h5 className="mb-2 block font-sans text-xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+                <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
                   Tailwind card
                 </h5>
-                <p className="block font-sans text-base font-light leading-relaxed text-inherit antialiased">
+                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
                   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
                   felis ligula.
                 </p>
