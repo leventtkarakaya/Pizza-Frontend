@@ -1,35 +1,40 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Logo from "@/public/pizza-banner.png";
 import Logo1 from "@/public/logo.svg";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { useDispatch } from "react-redux";
+import { setUserController } from "@/app/context/Slice/userSlice";
+import Cookies from "js-cookie";
 export default function page() {
-  const [user, setUser] = useState({
+  const [users, setUser] = useState({
     email: "",
     password: "",
   });
-  const [uploading, setUploading] = useState(false);
   const router = useRouter();
+  const [uploading, setUploading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleValue = (e) => {
     setUser({
-      ...user,
+      ...users,
       [e.target.name]: e.target.value,
     });
   };
 
   const handleOnSubmit = async (e) => {
+    debugger;
     e.preventDefault();
     try {
       setUploading(true);
       const response = await axios.post(
         "http://localhost:5000/api/auth/login",
-        { email: user.email, password: user.password },
+        { email: users.email, password: users.password },
         {
           headers: {
             "Content-Type": "application/json",
@@ -38,25 +43,29 @@ export default function page() {
       );
       console.log("🚀 ~ handleOnSubmit ~ response:", response);
       setUploading(false);
-      if (response.success === true && uploading === false) {
-        alert(response.message);
+      if (response.status === 200) {
+        localStorage.setItem("token", response.data.token);
+        dispatch(setUserController(response.data.user));
+        toast.success(response.message);
+        router.push("/");
       }
     } catch (error) {
       console.log("🚀 ~ handleOnSubmit ~ error:", error);
     }
   };
+
   return (
     <div>
       <div className="h-screen md:flex">
-        <div className="relative overflow-hidden md:flex w-1/2  justify-around items-center hidden">
+        <div className="relative items-center justify-around hidden w-1/2 overflow-hidden md:flex">
           <div>
             <Image src={Logo} alt="Logo" width={500} height={500} />
           </div>
         </div>
-        <div className="flex md:w-1/2 justify-center py-10 items-center font-sans">
+        <div className="flex items-center justify-center py-10 font-sans md:w-1/2">
           <form
             onSubmit={handleOnSubmit}
-            className="bg-gray-100 w-1/2 h-1/2 items-center rounded-xl shadow-2xl flex flex-col p-10"
+            className="flex flex-col items-center w-1/2 p-10 bg-gray-100 shadow-2xl h-1/2 rounded-xl"
           >
             <Image
               src={Logo1}
@@ -66,10 +75,10 @@ export default function page() {
               className="mb-3"
             />
             {/* E-mail Input */}
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -85,17 +94,17 @@ export default function page() {
                 id="email"
                 type="text"
                 name="email"
-                value={user.email}
+                value={users.email}
                 onChange={handleValue}
                 placeholder="E-Mail"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
             {/* Password Input */}
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+            <div className="flex items-center px-3 py-2 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -109,10 +118,10 @@ export default function page() {
                 id="password"
                 type="text"
                 name="password"
-                value={user.password}
+                value={users.password}
                 onChange={handleValue}
                 placeholder="Password"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
             <button
@@ -128,6 +137,7 @@ export default function page() {
             </Link>
           </form>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

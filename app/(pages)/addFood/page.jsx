@@ -1,99 +1,208 @@
-import React from "react";
+"use client";
+import React, { useState, useRef } from "react";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { setImage } from "@/app/context/Slice/imageSlice";
+import { setPizza } from "@/app/context/Slice/pizzaSlice";
+import "react-toastify/dist/ReactToastify.css";
+import Protected from "@/app/Components/Protected";
 
 export default function page() {
+  const [valueController, setValueController] = useState({
+    name: "",
+    smallPrice: "",
+    mediumPrice: "",
+    largePrice: "",
+    category: "",
+    description: "",
+    image: "",
+  });
+  const fileInputRef = useRef(null);
+
+  const handleFileChange = (e) => {
+    setUploading.image(e.target.files[0]);
+  };
+
+  const dispatch = useDispatch();
+  const [uploading, setUploading] = useState(false);
+  const handleValueChange = (e) => {
+    setValueController({
+      ...valueController,
+      [e.target.name]: e.target.value,
+    });
+    console.log(valueController);
+  };
+  const handleImage = async (e) => {
+    e.preventDefault();
+    let file = e.target.files[0];
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/v1/image/upload-image",
+        formData
+      );
+      setUploading(false);
+      setValueController({
+        ...valueController,
+        image: data.url,
+      });
+      if (uploading === false) {
+        dispatch(setImage({ url: data.url, public_id: data.public_id }));
+      }
+      console.log(data);
+    } catch (error) {
+      console.log("🚀 ~ handleImage ~ error:", error);
+    }
+  };
+  const handleOnSubmit = async (e) => {
+    debugger;
+    e.preventDefault();
+
+    try {
+      const response = await axios.post(
+        "http://localhost:5000/api/pizza/addFood",
+        {
+          name: valueController.name,
+          smallPrice: valueController.smallPrice,
+          mediumPrice: valueController.mediumPrice,
+          largePrice: valueController.largePrice,
+          category: valueController.category,
+          description: valueController.description,
+          image: valueController.image,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+      console.log("🚀 ~ file: page.jsx:handleOnSubmit ~ response:", response);
+      if (response.status === 200) {
+        dispatch(response.data);
+        dispatch(setPizza(response.data.pizza));
+      }
+    } catch (error) {
+      console.log("🚀 ~ file: page.jsx:handleOnSubmit ~ error:", error);
+    }
+  };
   return (
-    <>
-      <div className="p-8 rounded border border-gray-200 lg:mt-16 lg:px-20 font-sans flex items-center flex-col">
-        <h1 className="font-medium text-3xl">Admin Panel</h1>
-        <p className="text-gray-600 mt-6">
+    <Protected>
+      <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20">
+        <h1 className="text-3xl font-medium">Admin Panel</h1>
+        <p className="mt-6 text-gray-600">
           Listelemek istediginiz pizzayı seçiniz ve bilgilerinizi doldurunuz...
         </p>
-        <form>
-          <div className="mt-8 grid lg:grid-cols-2 gap-4">
+        <form onSubmit={handleOnSubmit} encType="multipart/form-data">
+          <div className="grid gap-4 mt-8 lg:grid-cols-2">
             <div>
-              <label className="text-sm text-gray-700 block mb-1 font-medium">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
                 İsim
               </label>
               <input
                 type="text"
                 name="name"
                 id="name"
-                className="input input-bordered w-full max-w-xs"
+                value={valueController.name}
+                onChange={handleValueChange}
+                className="w-full max-w-xs input input-bordered"
                 placeholder="Pizza adını giriniz"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-700 block mb-1 font-medium">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
                 Küçük Boy
               </label>
               <input
                 type="text"
-                name="priceSmall"
-                className="input input-bordered w-full max-w-xs"
+                name="smallPrice"
+                id="smallPrice"
+                value={valueController.smallPrice}
+                onChange={handleValueChange}
+                className="w-full max-w-xs input input-bordered"
                 placeholder="Kuçuk Boy Fiyatını giriniz"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-700 block mb-1 font-medium">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
                 Orta Boy
               </label>
               <input
                 type="text"
-                name="priceMedium"
-                className="input input-bordered w-full max-w-xs"
+                name="mediumPrice"
+                id="mediumPrice"
+                value={valueController.mediumPrice}
+                onChange={handleValueChange}
+                className="w-full max-w-xs input input-bordered"
                 placeholder="Orta Boy Fiyatını giriniz"
               />
             </div>
             <div>
-              <label className="text-sm text-gray-700 block mb-1 font-medium">
+              <label className="block mb-1 text-sm font-medium text-gray-700">
                 Büyük Boy
               </label>
               <input
                 type="text"
-                name="priceBig"
-                className="input input-bordered w-full max-w-xs"
+                name="largePrice"
+                id="largePrice"
+                value={valueController.largePrice}
+                onChange={handleValueChange}
+                className="w-full max-w-xs input input-bordered"
                 placeholder="Büyük Boy Fiyatını giriniz"
               />
             </div>
+            {/* image */}
             <div className="mt-3">
-              <label className="form-control w-full max-w-xs">
+              <label className="w-full max-w-xs form-control">
                 <input
                   type="file"
-                  className="file-input file-input-bordered file-input-md w-full max-w-xs "
+                  name="image"
+                  alt="image"
+                  accept=" .jpg, .png, .jpeg, .gif, .webp"
+                  onChange={handleImage || handleFileChange}
+                  ref={fileInputRef}
+                  className="w-full max-w-xs file-input file-input-bordered file-input-md "
                 />
               </label>
             </div>
             <div className="mt-3">
-              <select className="select select-ghost w-full max-w-xs input-bordered">
-                <option disabled selected>
-                  İçindekiler
-                </option>
-                <option>Hepsi</option>
-                <option>Etli</option>
-                <option>Sebzeli</option>
-                <option>Soslu</option>
-                <option>Peynirli</option>
-                <option>Karışık</option>
+              <select
+                className="w-full max-w-xs select select-ghost input-bordered"
+                name="category"
+                value={valueController.category}
+                onChange={handleValueChange}
+              >
+                <option value="Hepsi">Hepsi</option>
+                <option value="Etli">Etli</option>
+                <option value="Sebzeli">Sebzeli</option>
+                <option value="Soslu">Soslu</option>
+                <option value="Peynirli">Peynirli</option>
+                <option value="Karışık">Karışık</option>
               </select>
             </div>
           </div>
           <textarea
-            className="textarea textarea-bordered w-full mt-10"
+            className="w-full mt-10 textarea textarea-bordered"
+            name="description"
+            id="description"
+            value={valueController.description}
+            onChange={handleValueChange}
             placeholder="Açıklama yazın..."
           ></textarea>
-          <div className="space-x-4 mt-8">
+          <div className="mt-8 space-x-4">
             <button
               type="submit"
-              className="py-2 px-4 bg-blue-500 text-white rounded hover:bg-blue-600 active:bg-blue-700 disabled:opacity-50"
+              className="px-8 py-2 text-white bg-gradient-to-tr from-[#e9d5d0] to-[#d1411d] rounded"
             >
-              Save
+              Kayıt
             </button>
-            <button className="py-2 px-4 bg-white border border-gray-200 text-gray-600 rounded hover:bg-gray-100 active:bg-gray-200 disabled:opacity-50">
+            <button className="px-8 py-2 text-gray-600 bg-white border border-gray-200 rounded cursor-pointer hover:bg-gray-100 active:bg-gray-200 ">
               Cancel
             </button>
           </div>
         </form>
       </div>
-    </>
+    </Protected>
   );
 }

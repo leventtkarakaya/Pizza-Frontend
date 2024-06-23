@@ -1,10 +1,16 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import axios from "axios";
 import Image from "next/image";
 import Logo from "@/public/pizza-banner.png";
 
 export default function page() {
-  const [category, setCategory] = useState(1);
+  const [categories, setCategories] = useState(1);
+  const [category, setCategory] = useState({
+    value: "Hepsi",
+  });
+  const [foods, setFoods] = useState([]);
+  const [uploading, setUploading] = useState(false);
   const Pagination = [
     {
       id: 1,
@@ -38,11 +44,28 @@ export default function page() {
     },
   ];
   const handleClick = (id, value) => {
-    setCategory(id);
-
-    console.log(id);
-    console.log(value);
+    setCategories(id);
+    setCategory({ value: value });
   };
+
+  const handleOnGetPizzas = async () => {
+    try {
+      setUploading(true);
+      const response = await axios.get(
+        `http://localhost:5000/api/pizza/getAllFood?category=${category.value}`
+      );
+      setUploading(false);
+      console.log("🚀 ~ handleOnGetPizzas ~ response:", response);
+      if (response.status === 200) {
+        setFoods(response.data.pizza);
+      }
+    } catch (error) {
+      console.log("🚀 ~ handleOnGetPizzas ~ error:", error);
+    }
+  };
+  useEffect(() => {
+    handleOnGetPizzas();
+  }, [category]);
   return (
     <>
       <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20">
@@ -53,7 +76,7 @@ export default function page() {
               <button
                 key={item.id}
                 className={
-                  category === item.id
+                  categories === item.id
                     ? "px-12 py-6 bg-gradient-to-r from-[#e6e5e4] to-[#d1411d] text-white font-sans font-semibold rounded-md"
                     : "px-12 py-6 bg-gradient-to-r bg-[#d1411d] text-white font-sans font-semibold rounded-md"
                 }
@@ -64,35 +87,41 @@ export default function page() {
             ))}
           </div>
           {/* card */}
-          <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 ">
-            <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border">
-              <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
-                <Image
-                  src={Logo}
-                  alt="quattro stagioni"
-                  width={200}
-                  height={200}
-                  className="object-cover mt-6 ml-11 "
-                />
-              </div>
-              <div className="p-6">
-                <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                  Tailwind card
-                </h5>
-                <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nunc
-                  felis ligula.
-                </p>
-              </div>
-              <div className="p-6 pt-0">
-                <button
-                  type="button"
-                  className="select-none w-full rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                >
-                  Daha Fazla
-                </button>
-              </div>
-            </div>
+          <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 bg">
+            {foods &&
+              foods?.map((item) => {
+                return (
+                  <>
+                    <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border">
+                      <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
+                        <Image
+                          src={item.image}
+                          alt="quattro stagioni"
+                          width={200}
+                          height={200}
+                          className="object-cover mt-6 ml-11 "
+                        />
+                      </div>
+                      <div className="p-6">
+                        <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                          {item.name}
+                        </h5>
+                        <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                          {item.description}
+                        </p>
+                      </div>
+                      <div className="p-6 pt-0">
+                        <button
+                          type="button"
+                          className="select-none w-full rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                        >
+                          Daha Fazla
+                        </button>
+                      </div>
+                    </div>
+                  </>
+                );
+              })}
           </div>
         </div>
       </div>

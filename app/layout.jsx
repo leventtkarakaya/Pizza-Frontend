@@ -1,6 +1,7 @@
 import { Inter, Bangers } from "next/font/google";
 import Header from "@/app/Components/Header";
 import Footer from "@/app/Components/Footer";
+import ReduxProvider from "./context/provider";
 import "./globals.css";
 
 const inter = Inter({
@@ -17,11 +18,13 @@ export const metadata = {
 export default function ({ children }) {
   return (
     <html lang="tr">
-      <body className={`${inter.className} ${bangers.className}`}>
-        <Header />
-        {children}
-        <Footer />
-      </body>
+      <ReduxProvider>
+        <body className={`${inter.className} ${bangers.className}`}>
+          <Header />
+          {children}
+          <Footer />
+        </body>
+      </ReduxProvider>
     </html>
   );
 }

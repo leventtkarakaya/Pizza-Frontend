@@ -42,7 +42,6 @@ export default function page() {
           passwordConfirm: user.passwordConfirm,
         }
       );
-
       console.log("🚀 ~ handleSubmit ~ response:", response);
       setUploading(false);
       const localStorageToken = {
@@ -51,9 +50,8 @@ export default function page() {
         surName: response.data.users.surName,
         email: response.data.users.email,
       };
-      if (response.success === true && uploading === false) {
-        localStorage.setItem("User", localStorageToken);
-        Cookies.set("User", JSON.stringify(localStorageToken));
+      if (response.status === 201 && uploading === false) {
+        Cookies.set("user", localStorageToken.token);
         toast.success(response.message);
         router.push("/login");
       }
@@ -64,15 +62,15 @@ export default function page() {
   return (
     <div>
       <div className="h-screen md:flex">
-        <div className="relative overflow-hidden md:flex w-1/2  justify-around items-center hidden">
+        <div className="relative items-center justify-around hidden w-1/2 overflow-hidden md:flex">
           <div>
             <Image src={Logo} alt="Logo" width={500} height={500} />
           </div>
         </div>
-        <div className="flex md:w-1/2 justify-center py-10 items-center font-sans  ">
+        <div className="flex items-center justify-center py-10 font-sans md:w-1/2 ">
           <form
             onSubmit={handleOnSubmit}
-            className="bg-gray-100 w-3/4 items-center rounded-xl shadow-2xl flex flex-col p-10"
+            className="flex flex-col items-center w-3/4 p-10 bg-gray-100 shadow-2xl rounded-xl"
           >
             <Image
               src={Logo1}
@@ -81,10 +79,10 @@ export default function page() {
               height={100}
               className="mb-3"
             />
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -101,13 +99,13 @@ export default function page() {
                 value={user.name}
                 onChange={hendleValueChange}
                 placeholder="Adınızı"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -126,13 +124,13 @@ export default function page() {
                 value={user.surName}
                 onChange={hendleValueChange}
                 placeholder="Soyadınızı"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mb-4">
+            <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 fill="none"
                 viewBox="0 0 24 24"
                 stroke="currentColor"
@@ -151,13 +149,13 @@ export default function page() {
                 value={user.email}
                 onChange={hendleValueChange}
                 placeholder="E-mail Adresiniz"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl">
+            <div className="flex items-center px-3 py-2 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -174,13 +172,13 @@ export default function page() {
                 value={user.password}
                 onChange={hendleValueChange}
                 placeholder="Sifreniz"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
-            <div className="flex items-center border-2 py-2 px-3 rounded-2xl mt-4">
+            <div className="flex items-center px-3 py-2 mt-4 border-2 rounded-2xl">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
-                className="h-5 w-5 text-gray-400"
+                className="w-5 h-5 text-gray-400"
                 viewBox="0 0 20 20"
                 fill="currentColor"
               >
@@ -197,7 +195,7 @@ export default function page() {
                 value={user.passwordConfirm}
                 onChange={hendleValueChange}
                 placeholder="Sifreniz Tekrar"
-                className="pl-2 outline-none border-none bg-gray-100"
+                className="pl-2 bg-gray-100 border-none outline-none"
               />
             </div>
             <button className="block w-1/2 font-sans bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] mt-4 py-2 hover:text-[#a24747]  rounded-2xl text-white font-semibold mb-2">
