@@ -1,10 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  user: {
+  usersave: {
     name: "",
     surName: "",
     email: "",
+    image: "",
   },
 };
 
@@ -13,7 +14,7 @@ export const userSlice = createSlice({
   initialState,
   reducers: {
     setUserController: (state, action) => {
-      state.user = action.payload;
+      state.usersave = action.payload;
     },
   },
 });

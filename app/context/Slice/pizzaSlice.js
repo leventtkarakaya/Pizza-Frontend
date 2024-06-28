@@ -1,7 +1,13 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  pizza: {},
+  pizza: {
+    name: "",
+    price: 0,
+    image: "",
+    description: "",
+    quantity: 0,
+  },
 };
 
 const pizzaSlice = createSlice({

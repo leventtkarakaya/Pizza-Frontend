@@ -20,7 +20,8 @@
     "react-modal": "^3.16.1",
     "react-parallax-mouse": "^2.1.0",
     "react-redux": "^9.1.2",
-    "react-toastify": "^10.0.5"
+    "react-toastify": "^10.0.5",
+    "swiper": "^11.1.4"
   },
   "devDependencies": {
     "daisyui": "^4.12.2",

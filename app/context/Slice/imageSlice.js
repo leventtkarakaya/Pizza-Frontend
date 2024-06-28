@@ -1,7 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  image: {},
+  image: {
+    url: "",
+    public_id: "",
+  },
 };
 
 export const imageSlice = createSlice({

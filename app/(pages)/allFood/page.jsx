@@ -2,8 +2,8 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-import Logo from "@/public/pizza-banner.png";
-
+import Link from "next/link";
+import loading from "@/public/loading.gif";
 export default function page() {
   const [categories, setCategories] = useState(1);
   const [category, setCategory] = useState({
@@ -55,7 +55,6 @@ export default function page() {
         `http://localhost:5000/api/pizza/getAllFood?category=${category.value}`
       );
       setUploading(false);
-      console.log("🚀 ~ handleOnGetPizzas ~ response:", response);
       if (response.status === 200) {
         setFoods(response.data.pizza);
       }
@@ -68,7 +67,7 @@ export default function page() {
   }, [category]);
   return (
     <>
-      <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20">
+      <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20 ">
         <div className="flex flex-col w-full gap-4 ">
           {/* Pagination */}
           <div className="flex justify-around w-full btn-nav ">
@@ -88,19 +87,21 @@ export default function page() {
           </div>
           {/* card */}
           <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 bg">
-            {foods &&
+            {uploading === false ? (
               foods?.map((item) => {
                 return (
                   <>
                     <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border">
                       <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
-                        <Image
-                          src={item.image}
-                          alt="quattro stagioni"
-                          width={200}
-                          height={200}
-                          className="object-cover mt-6 ml-11 "
-                        />
+                        <Link href={`/pizzaDetails/${item._id}`}>
+                          <Image
+                            src={item.image}
+                            alt="quattro stagioni"
+                            width={200}
+                            height={200}
+                            className="object-cover mt-6 ml-11 "
+                          />
+                        </Link>
                       </div>
                       <div className="p-6">
                         <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
@@ -113,15 +114,26 @@ export default function page() {
                       <div className="p-6 pt-0">
                         <button
                           type="button"
-                          className="select-none w-full rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                          className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                         >
-                          Daha Fazla
+                          Siparişe Ekle
                         </button>
                       </div>
                     </div>
                   </>
                 );
-              })}
+              })
+            ) : (
+              <div className="flex items-center justify-center w-full">
+                <Image
+                  src={loading}
+                  alt="loading"
+                  className="flex items-center justify-center object-cover"
+                  width={200}
+                  height={200}
+                />
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -5,21 +5,23 @@ import Image from "next/image";
 import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { setPizza } from "../context/Slice/pizzaSlice";
+import loading from "@/public/loading.gif";
 import {
   setCartPizza,
   addToCart,
   removeToCart,
 } from "@/app/context/Slice/cardSlice";
-
 export default function ContentArea() {
   const [pizzas, setPizzas] = useState([]);
   const dispatch = useDispatch();
-
+  const [uploading, setUploading] = useState(false);
   const getPizzas = async () => {
     try {
+      setUploading(true);
       const response = await axios.get(
         "http://localhost:5000/api/pizza/get-pizza"
       );
+      setUploading(false);
       console.log("🚀 ~ getPizzas ~ response:", response);
       if (response.status === 200) {
         dispatch(setPizza(response.data.pizza));
@@ -39,8 +41,8 @@ export default function ContentArea() {
   console.log("🚀 ~ ContentArea ~ pizzas:", pizzas);
   return (
     <div className="container mx-auto mt-6 ">
-      <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8">
-        {pizzas &&
+      <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8 ">
+        {uploading === false ? (
           pizzas?.map((item) => {
             return (
               <div
@@ -48,13 +50,15 @@ export default function ContentArea() {
                 key={item._id}
               >
                 <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
-                  <Image
-                    src={item.image}
-                    alt="quattro stagioni"
-                    width={200}
-                    height={200}
-                    className="object-cover mt-6 ml-11 "
-                  />
+                  <Link href={`/pizzaDetails/${item._id}`}>
+                    <Image
+                      src={item.image}
+                      alt="quattro stagioni"
+                      width={200}
+                      height={200}
+                      className="object-cover mt-6 ml-11 "
+                    />
+                  </Link>
                 </div>
                 <div className="p-6">
                   <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
@@ -65,10 +69,11 @@ export default function ContentArea() {
                   </p>
                 </div>
                 <div className="p-6 pt-0">
-                  <Link href={`/`}>
+                  <Link href={`/pizzaDetails/${item._id}`}>
                     <button
                       type="button"
-                      className="select-none w-full rounded-lg bg-blue-500 py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                      onClick={() => dispatch(setCartPizza(item._id))}
+                      className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
                       Daha Fazla
                     </button>
@@ -76,7 +81,18 @@ export default function ContentArea() {
                 </div>
               </div>
             );
-          })}
+          })
+        ) : (
+          <div className="flex items-center justify-center w-full ">
+            <Image
+              src={loading}
+              alt="loading"
+              width={200}
+              height={200}
+              className="object-cover w-full "
+            />
+          </div>
+        )}
       </div>
     </div>
   );

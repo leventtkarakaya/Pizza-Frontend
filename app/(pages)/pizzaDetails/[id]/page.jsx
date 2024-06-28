@@ -16,18 +16,14 @@ export default function page() {
   const [pizzaDetails, setPizzaDetails] = useState([]);
   const [uploading, setUploading] = useState(false);
   const params = useParams();
-  const result = params.id;
   const dispatch = useDispatch();
-  const pizza = useSelector((state) => state.pizza.pizza);
-
   const handleID = async () => {
     setUploading(true);
     try {
       const response = await axios.get(
-        `http://localhost:5000/api/pizza/getPizza/${result}`
+        `http://localhost:5000/api/pizza/getPizza/${params.id}`
       );
       setUploading(false);
-      console.log("🚀 ~ handleID ~ response:", response);
       if (response.status === 200) {
         setPizzaDetails(response.data.pizza);
         dispatch(setPizza(response.data.pizza));
@@ -40,7 +36,6 @@ export default function page() {
   useEffect(() => {
     handleID();
   }, []);
-  console.log("🚀 ~ page ~ pizzaDetails:", pizzaDetails);
   return (
     <div>
       {uploading === false ? (
@@ -98,13 +93,19 @@ export default function page() {
                 <div className="flex justify-between mt-3 item-center">
                   <h1 className="text-xl font-bold text-gray-700">$220</h1>
                   <div className="flex gap-2">
-                    <button className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded">
+                    <button
+                      onClick={() => dispatch(removeToCart(pizzaDetails))}
+                      className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
+                    >
                       <FaMinus />
                     </button>
                     <button className="px-3 py-2 text-xs font-bold text-white uppercase bg-gray-800 rounded">
-                      0
+                      {0}
                     </button>
-                    <button className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded">
+                    <button
+                      onClick={() => dispatch(addToCart(pizzaDetails))}
+                      className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
+                    >
                       <FaPlus />
                     </button>
                   </div>

@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import React from "react";
 import Image from "next/image";
 import Logo from "@/public/pizza-banner.png";
@@ -10,6 +10,8 @@ import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import { useDispatch } from "react-redux";
+import { setImage } from "@/app/context/Slice/imageSlice";
 export default function page() {
   const [user, setUser] = useState({
     name: "",
@@ -17,15 +19,44 @@ export default function page() {
     email: "",
     password: "",
     passwordConfirm: "",
+    image: "",
   });
   const [uploading, setUploading] = useState(false);
+  const dispatch = useDispatch();
   const router = useRouter();
+  const fileInputRef = useRef(null);
+
   const hendleValueChange = (e) => {
     setUser({
       ...user,
       [e.target.name]: e.target.value,
     });
     console.log(user);
+  };
+
+  const handleImage = async (e) => {
+    debugger;
+    e.preventDefault();
+    let file = e.target.files[0];
+    console.log("🚀 ~ handleImage ~ file:", file);
+    const formData = new FormData();
+    formData.append("image", file);
+    setUploading(true);
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/v1/image/upload-image",
+        formData
+      );
+      console.log("🚀 ~ handleImage ~ data:", data);
+      setUploading(false);
+      if (uploading === false) {
+        dispatch(setImage({ url: data.url, public_id: data.public_id }));
+        setUser({ ...user, image: data.url });
+      }
+      console.log(data);
+    } catch (error) {
+      console.log("🚀 ~ handleImage ~ error:", error);
+    }
   };
   const handleOnSubmit = async (e) => {
     debugger;
@@ -40,6 +71,7 @@ export default function page() {
           email: user.email,
           password: user.password,
           passwordConfirm: user.passwordConfirm,
+          image: user?.image,
         }
       );
       console.log("🚀 ~ handleSubmit ~ response:", response);
@@ -59,6 +91,7 @@ export default function page() {
       console.log("🚀 ~ handleSubmit ~ error:", error);
     }
   };
+
   return (
     <div>
       <div className="h-screen md:flex">
@@ -196,6 +229,18 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="Sifreniz Tekrar"
                 className="pl-2 bg-gray-100 border-none outline-none"
+              />
+            </div>
+            <div className="flex items-center w-2/4 mt-4 bg-gray-100">
+              <input
+                type="file"
+                name="file"
+                id="file"
+                value={user.image}
+                onChange={handleImage}
+                ref={fileInputRef}
+                accept="image/*"
+                className="w-full h-10 bg-gray-100 file-input"
               />
             </div>
             <button className="block w-1/2 font-sans bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] mt-4 py-2 hover:text-[#a24747]  rounded-2xl text-white font-semibold mb-2">

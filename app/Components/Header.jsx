@@ -6,11 +6,14 @@ import Logo from "@/public/logo.svg";
 import Bag from "@/public/bag.svg";
 import Modal from "react-modal";
 import { BsXLg } from "react-icons/bs";
-
+import avatar from "@/public/user.png";
+import { useDispatch, useSelector } from "react-redux";
+import { setUserController } from "@/app/context/Slice/userSlice";
 Modal.setAppElement("body");
 export default function Header() {
   const [modalIsOpen, setIsOpen] = useState(false);
-
+  const user = useSelector((state) => state.user.usersave);
+  console.log("🚀 ~ Header ~ user:", user);
   function openModal() {
     setIsOpen(true);
   }
@@ -33,7 +36,7 @@ export default function Header() {
             <span>Pizzalar</span>
           </Link>
           <Link
-            href="/"
+            href="/favoritePizza"
             className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
           >
             <span>Favoriler</span>
@@ -66,9 +69,12 @@ export default function Header() {
               className="btn btn-ghost btn-circle avatar"
             >
               <div className="rounded-full w-14">
-                <img
-                  alt="Tailwind CSS Navbar component"
-                  src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"
+                <Image
+                  src={avatar}
+                  alt="Profile"
+                  className="rounded-full"
+                  width={100}
+                  height={100}
                 />
               </div>
             </div>
