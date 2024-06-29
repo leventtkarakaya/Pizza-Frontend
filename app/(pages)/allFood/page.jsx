@@ -70,13 +70,13 @@ export default function page() {
       <div className="flex flex-col items-center p-8 font-sans border border-gray-200 rounded lg:mt-16 lg:px-20 ">
         <div className="flex flex-col w-full gap-4 ">
           {/* Pagination */}
-          <div className="flex justify-around w-full btn-nav ">
+          <div className="flex justify-around w-full btn-nav max-md:gap-4">
             {Pagination.map((item) => (
               <button
                 key={item.id}
                 className={
                   categories === item.id
-                    ? "px-12 py-6 bg-gradient-to-r from-[#e6e5e4] to-[#d1411d] text-white font-sans font-semibold rounded-md"
+                    ? "px-12 py-6 bg-gradient-to-r from-[#e6e5e4] to-[#d1411d] text-white font-sans font-semibold rounded-md "
                     : "px-12 py-6 bg-gradient-to-r bg-[#d1411d] text-white font-sans font-semibold rounded-md"
                 }
                 onClick={() => handleClick(item.id, item.value)}
@@ -87,7 +87,7 @@ export default function page() {
           </div>
           {/* card */}
           <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 bg">
-            {uploading === false ? (
+            {uploading === false &&
               foods?.map((item) => {
                 return (
                   <>
@@ -122,16 +122,12 @@ export default function page() {
                     </div>
                   </>
                 );
-              })
-            ) : (
-              <div className="flex items-center justify-center w-full">
-                <Image
-                  src={loading}
-                  alt="loading"
-                  className="flex items-center justify-center object-cover"
-                  width={200}
-                  height={200}
-                />
+              })}
+            {foods?.length === 0 && (
+              <div className="grid w-full h-screen col-span-full">
+                <p className="text-3xl font-bold text-center">
+                  Aradıgınız ürün bulunamadı
+                </p>
               </div>
             )}
           </div>

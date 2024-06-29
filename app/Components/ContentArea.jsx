@@ -53,7 +53,7 @@ export default function ContentArea() {
                   <Link href={`/pizzaDetails/${item._id}`}>
                     <Image
                       src={item.image}
-                      alt="quattro stagioni"
+                      alt="pizza"
                       width={200}
                       height={200}
                       className="object-cover mt-6 ml-11 "
