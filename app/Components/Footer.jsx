@@ -4,21 +4,21 @@ import Logo from "@/public/logo.svg";
 export default function Footer() {
   return (
     <footer className="bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] mt-5 ">
-      <div className="mx-auto max-w-5xl px-4 py-16 sm:px-6 lg:px-8 font-sans">
+      <div className="max-w-5xl px-4 py-16 mx-auto font-sans sm:px-6 lg:px-8">
         <div className="flex justify-center text-teal-600">
           <Image src={Logo} alt="Logo" width={150} height={150} />
         </div>
 
-        <p className="mx-auto mt-6 max-w-md text-center leading-relaxed text-white">
+        <p className="max-w-md mx-auto mt-6 leading-relaxed text-center text-white">
           Şehrin En İyİ Pİzzaları Lezzeti Anlatılmaz Yaşanır Güvenilir Temiz Ve
           Taze Pizzalar
         </p>
 
-        <ul className="mt-12 flex flex-wrap justify-center gap-6 md:gap-8 lg:gap-12">
+        <ul className="flex flex-wrap justify-center gap-6 mt-12 md:gap-8 lg:gap-12">
           <li>
             <a
               className="text-white transition hover:text-gray-700/75"
-              href="#"
+              href="/hakkimizda"
             >
               Hakkımızda
             </a>
@@ -27,7 +27,7 @@ export default function Footer() {
           <li>
             <a
               className="text-white transition hover:text-gray-700/75"
-              href="#"
+              href="/bayilerimiz"
             >
               Bayilerimiz
             </a>
@@ -52,7 +52,7 @@ export default function Footer() {
           </li>
         </ul>
 
-        <ul className="mt-12 flex justify-center gap-6 md:gap-8">
+        <ul className="flex justify-center gap-6 mt-12 md:gap-8">
           <li>
             <a
               href="#"
@@ -62,7 +62,7 @@ export default function Footer() {
             >
               <span className="sr-only">Facebook</span>
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
@@ -85,7 +85,7 @@ export default function Footer() {
             >
               <span className="sr-only">Instagram</span>
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
@@ -108,7 +108,7 @@ export default function Footer() {
             >
               <span className="sr-only">Twitter</span>
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"
@@ -127,7 +127,7 @@ export default function Footer() {
             >
               <span className="sr-only">GitHub</span>
               <svg
-                className="h-6 w-6"
+                className="w-6 h-6"
                 fill="currentColor"
                 viewBox="0 0 24 24"
                 aria-hidden="true"

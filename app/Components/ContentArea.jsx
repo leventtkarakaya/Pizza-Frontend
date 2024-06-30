@@ -35,6 +35,9 @@ export default function ContentArea() {
   };
   useEffect(() => {
     getPizzas();
+    return () => {
+      setPizzas();
+    };
   }, []);
   const controller = useSelector((state) => state.cart.cartItem);
   console.log("🚀 ~ ContentArea ~ controller:", controller);

@@ -13,6 +13,7 @@ Modal.setAppElement("body");
 export default function Header() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user.usersave);
+  const dispatch = useDispatch();
   console.log("🚀 ~ Header ~ user:", user);
   function openModal() {
     setIsOpen(true);
@@ -28,29 +29,29 @@ export default function Header() {
         <Link href="/">
           <Image src={Logo} alt="Logo" width={100} height={100} />
         </Link>
-        <div className="flex items-center gap-12 text-white cursor-pointer ">
+        <div className="flex items-center gap-12 text-white cursor-pointers">
           <Link
             href="/allFood"
-            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
+            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
             <span>Pizzalar</span>
           </Link>
           <Link
             href="/favoritePizza"
-            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
+            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
             <span>Favoriler</span>
           </Link>
           <Link
             href="/"
-            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
+            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
             <span>Sevilenler</span>
           </Link>
           {/* Admin */}
           <Link
             href="/addFood"
-            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden "
+            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
             <span>Pizza Ekle</span>
           </Link>
@@ -68,7 +69,7 @@ export default function Header() {
               role="button"
               className="btn btn-ghost btn-circle avatar"
             >
-              <div className="rounded-full w-14">
+              <div className="mt-2 rounded-full w-14">
                 <Image
                   src={avatar}
                   alt="Profile"
@@ -91,12 +92,22 @@ export default function Header() {
                 </a>
               </li>
               <li>
-                <a className="font-sans text-lg font-medium text-black">
-                  Ayarlar
-                </a>
+                {user?._id === undefined ? (
+                  <a
+                    className="font-sans text-lg font-medium text-black"
+                    href="/login"
+                  >
+                    Üye Ol
+                  </a>
+                ) : (
+                  <a></a>
+                )}
               </li>
               <li>
-                <a className="font-sans text-lg font-medium text-black">
+                <a
+                  className="font-sans text-lg font-medium text-black"
+                  onClick={() => dispatch(setUserController(null))}
+                >
                   Çıkış
                 </a>
               </li>

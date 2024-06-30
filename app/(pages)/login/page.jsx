@@ -6,11 +6,8 @@ import Logo1 from "@/public/logo.svg";
 import Link from "next/link";
 import axios from "axios";
 import { useRouter } from "next/navigation";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import { useDispatch } from "react-redux";
 import { setUserController } from "@/app/context/Slice/userSlice";
-import Cookies from "js-cookie";
 export default function page() {
   const [users, setUser] = useState({
     email: "",
@@ -28,7 +25,6 @@ export default function page() {
   };
 
   const handleOnSubmit = async (e) => {
-    debugger;
     e.preventDefault();
     try {
       setUploading(true);
@@ -41,21 +37,38 @@ export default function page() {
           },
         }
       );
-      console.log("🚀 ~ handleOnSubmit ~ response:", response);
       setUploading(false);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         dispatch(setUserController(response.data.user));
-        toast.success(response.message);
         router.push("/");
       }
     } catch (error) {
       console.log("🚀 ~ handleOnSubmit ~ error:", error);
+      if (error) {
+        switch (error.response.status) {
+          case 400:
+            window.alert(error.response.data.message);
+            break;
+          case 401:
+            window.alert(error.response.data.message);
+            break;
+          case 404:
+            window.alert(error.response.data.message);
+            break;
+          case 500:
+            window.alert(error.response.data.message);
+            break;
+          default:
+            window.alert(error.response.data.message);
+            break;
+        }
+      }
     }
   };
 
   return (
-    <div>
+    <>
       <div className="h-screen md:flex">
         <div className="relative items-center justify-around hidden w-1/2 overflow-hidden md:flex">
           <div>
@@ -137,8 +150,7 @@ export default function page() {
             </Link>
           </form>
         </div>
-        <ToastContainer />
       </div>
-    </div>
+    </>
   );
 }

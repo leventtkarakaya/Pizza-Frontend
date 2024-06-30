@@ -87,49 +87,106 @@ export default function page() {
           </div>
           {/* card */}
           <div className="grid w-full grid-cols-4 px-10 mt-20 gap-x-28 gap-y-10 max-sm:grid-cols-1 max-lg:grid-cols-2 max-lg:gap-x-24 max-lg:px-10 max-sm:px-0 bg">
-            {uploading === false &&
-              foods?.map((item) => {
-                return (
-                  <>
-                    <div className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border">
-                      <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
-                        <Link href={`/pizzaDetails/${item._id}`}>
-                          <Image
-                            src={item.image}
-                            alt="quattro stagioni"
-                            width={200}
-                            height={200}
-                            className="object-cover mt-6 ml-11 "
-                          />
-                        </Link>
+            {uploading === false
+              ? foods?.map((item) => {
+                  return (
+                    <>
+                      <div
+                        className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border"
+                        key={item._id}
+                      >
+                        <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
+                          <Link
+                            href={`/pizzaDetails/${item._id}`}
+                            key={item._id}
+                          >
+                            <Image
+                              src={item.image}
+                              alt="quattro stagioni"
+                              width={200}
+                              height={200}
+                              className="object-cover mt-6 ml-11 "
+                            />
+                          </Link>
+                        </div>
+                        <div className="p-6">
+                          <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                            {item.name}
+                          </h5>
+                          <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="p-6 pt-0">
+                          <button
+                            type="button"
+                            className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                          >
+                            Siparişe Ekle
+                          </button>
+                        </div>
                       </div>
-                      <div className="p-6">
-                        <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
-                          {item.name}
-                        </h5>
-                        <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
-                          {item.description}
-                        </p>
+                    </>
+                  );
+                })
+              : uploading === true && (
+                  <div className="grid w-full col-span-full place-items-center">
+                    <Image
+                      src={loading}
+                      alt="loading"
+                      width={200}
+                      height={200}
+                    />
+                  </div>
+                )}
+            {uploading === false
+              ? foods?.length === 0 && (
+                  <div className="grid w-full col-span-full place-items-center h-80">
+                    <h1>Ürün bulunamadı</h1>
+                  </div>
+                )
+              : foods?.length > 1 &&
+                foods?.map((item) => {
+                  return (
+                    <>
+                      <div
+                        className="relative flex flex-col text-gray-700 bg-white shadow-md w-80 rounded-xl bg-clip-border"
+                        key={item._id}
+                      >
+                        <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
+                          <Link
+                            href={`/pizzaDetails/${item._id}`}
+                            key={item._id}
+                          >
+                            <Image
+                              src={item.image}
+                              alt="quattro stagioni"
+                              width={200}
+                              height={200}
+                              className="object-cover mt-6 ml-11 "
+                            />
+                          </Link>
+                        </div>
+                        <div className="p-6">
+                          <h5 className="block mb-2 font-sans text-xl antialiased font-semibold leading-snug tracking-normal text-blue-gray-900">
+                            {item.name}
+                          </h5>
+                          <p className="block font-sans text-base antialiased font-light leading-relaxed text-inherit">
+                            {item.description}
+                          </p>
+                        </div>
+                        <div className="p-6 pt-0">
+                          <button
+                            type="button"
+                            className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
+                          >
+                            Siparişe Ekle
+                          </button>
+                        </div>
                       </div>
-                      <div className="p-6 pt-0">
-                        <button
-                          type="button"
-                          className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
-                        >
-                          Siparişe Ekle
-                        </button>
-                      </div>
-                    </div>
-                  </>
-                );
-              })}
-            {foods?.length === 0 && (
-              <div className="grid w-full h-screen col-span-full">
-                <p className="text-3xl font-bold text-center">
-                  Aradıgınız ürün bulunamadı
-                </p>
-              </div>
-            )}
+                    </>
+                  );
+                })}
           </div>
         </div>
       </div>

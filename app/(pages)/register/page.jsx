@@ -133,6 +133,7 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="Adınızı"
                 className="pl-2 bg-gray-100 border-none outline-none"
+                required
               />
             </div>
             <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
@@ -158,6 +159,7 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="Soyadınızı"
                 className="pl-2 bg-gray-100 border-none outline-none"
+                required
               />
             </div>
             <div className="flex items-center px-3 py-2 mb-4 border-2 rounded-2xl">
@@ -183,6 +185,7 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="E-mail Adresiniz"
                 className="pl-2 bg-gray-100 border-none outline-none"
+                required
               />
             </div>
             <div className="flex items-center px-3 py-2 border-2 rounded-2xl">
@@ -206,6 +209,7 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="Sifreniz"
                 className="pl-2 bg-gray-100 border-none outline-none"
+                required
               />
             </div>
             <div className="flex items-center px-3 py-2 mt-4 border-2 rounded-2xl">
@@ -229,6 +233,7 @@ export default function page() {
                 onChange={hendleValueChange}
                 placeholder="Sifreniz Tekrar"
                 className="pl-2 bg-gray-100 border-none outline-none"
+                required
               />
             </div>
             <div className="flex items-center w-2/4 mt-4 bg-gray-100">

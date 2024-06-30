@@ -5,6 +5,7 @@ import Image from "next/image";
 import Link from "next/link";
 import pizaa from "@/public/tonno.webp";
 import loading from "@/public/loading.gif";
+import loadingImage from "@/public/loadingImage.gif";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
@@ -63,10 +64,13 @@ export default function page() {
             }}
           >
             <SwiperSlide>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex flex-col items-center justify-center"
+                key={cart[0]?._id}
+              >
                 <Link href={`/pizzaDetails/${cart[0]?._id}`}>
                   <Image
-                    src={cart[0]?.image}
+                    src={cart[0]?.image || loadingImage}
                     alt="pizza"
                     width={300}
                     height={300}
@@ -80,10 +84,13 @@ export default function page() {
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex flex-col items-center justify-center"
+                key={cart[1]?._id}
+              >
                 <Link href={`/pizzaDetails/${cart[1]?._id}`}>
                   <Image
-                    src={cart[1]?.image}
+                    src={cart[1]?.image || loadingImage}
                     alt="pizza"
                     width={300}
                     height={300}
@@ -96,11 +103,14 @@ export default function page() {
                 </div>
               </div>
             </SwiperSlide>
-            <SwiperSlide className="flex flex-col items-center justify-center">
-              <div className="flex flex-col items-center justify-center">
+            <SwiperSlide>
+              <div
+                className="flex flex-col items-center justify-center"
+                key={cart[2]?._id}
+              >
                 <Link href={`/pizzaDetails/${cart[2]?._id}`}>
                   <Image
-                    src={cart[2]?.image}
+                    src={cart[2]?.image || loadingImage}
                     alt="pizza"
                     width={300}
                     height={300}
@@ -114,10 +124,13 @@ export default function page() {
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex flex-col items-center justify-center"
+                key={cart[3]?._id}
+              >
                 <Link href={`/pizzaDetails/${cart[3]?._id}`}>
                   <Image
-                    src={cart[3]?.image}
+                    src={cart[3]?.image || loadingImage}
                     alt="pizza"
                     width={300}
                     height={300}
@@ -131,10 +144,13 @@ export default function page() {
               </div>
             </SwiperSlide>
             <SwiperSlide>
-              <div className="flex flex-col items-center justify-center">
+              <div
+                className="flex flex-col items-center justify-center"
+                key={cart[4]?._id}
+              >
                 <Link href={`/pizzaDetails/${cart[4]?._id}`}>
                   <Image
-                    src={cart[4]?.image}
+                    src={cart[4]?.image || loadingImage}
                     alt="pizza"
                     width={300}
                     height={300}
@@ -149,9 +165,12 @@ export default function page() {
             </SwiperSlide>
           </Swiper>
         ) : (
-          <div className="flex items-center justify-center w-full h-full ">
-            <Image src={loading} alt="loading" className="w-40" />
-          </div>
+          uploading === false &&
+          cart?.length === 0 && (
+            <div className="flex items-center justify-center w-full h-full ">
+              <h1>Hiç bir ürün bulunamadı</h1>
+            </div>
+          )
         )}
       </div>
     </div>
