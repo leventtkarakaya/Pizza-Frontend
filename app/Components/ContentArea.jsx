@@ -40,7 +40,8 @@ export default function ContentArea() {
     };
   }, []);
   const controller = useSelector((state) => state.cart.cartItem);
-
+  console.log("🚀 ~ ContentArea ~ controller:", controller);
+  console.log("🚀 ~ ContentArea ~ pizzas:", pizzas);
   return (
     <div className="container mx-auto mt-6 ">
       <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8 ">
