@@ -6,15 +6,10 @@ import { useRouter } from "next/navigation";
 import { setUserController } from "@/app/context/Slice/userSlice";
 
 export default function ProtectedRoute({ children }) {
-  const router = useRouter();
-  const user = useSelector((state) => state.user.user);
-  const pizza = useSelector((state) => state.pizza.pizza);
-  console.log("🚀 ~ ProtectedRoute ~ pizza:", pizza);
   const dispatch = useDispatch();
-
-  console.log("🚀 ~ getUser ~ user:", user);
+  const user = useSelector((state) => state.user.usersave);
+  const router = useRouter();
   const getUser = async () => {
-    debugger;
     try {
       const response = await axios.get(
         "http://localhost:5000/api/auth/get-user",

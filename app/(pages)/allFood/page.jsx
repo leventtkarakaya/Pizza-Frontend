@@ -52,7 +52,12 @@ export default function page() {
     try {
       setUploading(true);
       const response = await axios.get(
-        `http://localhost:5000/api/pizza/getAllFood?category=${category.value}`
+        `http://localhost:5000/api/pizza/getAllFood?category=${category.value}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
       );
       setUploading(false);
       if (response.status === 200) {
@@ -73,13 +78,13 @@ export default function page() {
           <div className="flex justify-around w-full btn-nav max-md:gap-4">
             {Pagination.map((item) => (
               <button
-                key={item.id}
                 className={
                   categories === item.id
                     ? "px-12 py-6 bg-gradient-to-r from-[#e6e5e4] to-[#d1411d] text-white font-sans font-semibold rounded-md "
                     : "px-12 py-6 bg-gradient-to-r bg-[#d1411d] text-white font-sans font-semibold rounded-md"
                 }
                 onClick={() => handleClick(item.id, item.value)}
+                key={item.id}
               >
                 {item.name}
               </button>
@@ -141,7 +146,10 @@ export default function page() {
                 )}
             {uploading === false
               ? foods?.length === 0 && (
-                  <div className="grid w-full col-span-full place-items-center h-80">
+                  <div
+                    className="grid w-full col-span-full place-items-center h-80"
+                    key={category}
+                  >
                     <h1>Ürün bulunamadı</h1>
                   </div>
                 )

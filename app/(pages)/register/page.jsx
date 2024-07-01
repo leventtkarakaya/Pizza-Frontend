@@ -6,12 +6,12 @@ import Logo from "@/public/pizza-banner.png";
 import Logo1 from "@/public/logo.svg";
 import Link from "next/link";
 import axios from "axios";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Cookies from "js-cookie";
+import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setImage } from "@/app/context/Slice/imageSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function page() {
   const [user, setUser] = useState({
     name: "",
@@ -31,11 +31,9 @@ export default function page() {
       ...user,
       [e.target.name]: e.target.value,
     });
-    console.log(user);
   };
 
   const handleImage = async (e) => {
-    debugger;
     e.preventDefault();
     let file = e.target.files[0];
     console.log("🚀 ~ handleImage ~ file:", file);
@@ -59,7 +57,6 @@ export default function page() {
     }
   };
   const handleOnSubmit = async (e) => {
-    debugger;
     e.preventDefault();
     try {
       setUploading(true);
@@ -74,7 +71,6 @@ export default function page() {
           image: user?.image,
         }
       );
-      console.log("🚀 ~ handleSubmit ~ response:", response);
       setUploading(false);
       const localStorageToken = {
         token: response.data.token,
@@ -244,7 +240,7 @@ export default function page() {
                 value={user.image}
                 onChange={handleImage}
                 ref={fileInputRef}
-                accept="image/*"
+                accept=" .jpg, .jpeg, .png, .webp"
                 className="w-full h-10 bg-gray-100 file-input"
               />
             </div>
@@ -258,6 +254,7 @@ export default function page() {
             </Link>
           </form>
         </div>
+        <ToastContainer />
       </div>
     </div>
   );

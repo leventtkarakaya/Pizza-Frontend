@@ -5,20 +5,18 @@ import Link from "next/link";
 import Logo from "@/public/logo.svg";
 import Bag from "@/public/bag.svg";
 import Modal from "react-modal";
-import { BsXLg } from "react-icons/bs";
 import avatar from "@/public/user.png";
 import { useDispatch, useSelector } from "react-redux";
 import { setUserController } from "@/app/context/Slice/userSlice";
+import { BsXLg } from "react-icons/bs";
 Modal.setAppElement("body");
 export default function Header() {
   const [modalIsOpen, setIsOpen] = useState(false);
   const user = useSelector((state) => state.user.usersave);
   const dispatch = useDispatch();
-  console.log("🚀 ~ Header ~ user:", user);
   function openModal() {
     setIsOpen(true);
   }
-
   function closeModal() {
     setIsOpen(false);
   }
@@ -49,12 +47,14 @@ export default function Header() {
             <span>Sevilenler</span>
           </Link>
           {/* Admin */}
-          <Link
-            href="/addFood"
-            className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
-          >
-            <span>Pizza Ekle</span>
-          </Link>
+          {user?.role === "admin" && (
+            <Link
+              href="/addFood"
+              className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
+            >
+              <span>Pizza Ekle</span>
+            </Link>
+          )}
           <Link href="/">
             <div className="relative">
               <Image src={Bag} alt="Logo" width={35} height={35} />
@@ -67,9 +67,9 @@ export default function Header() {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar"
+              className="mt-2 btn btn-ghost btn-circle avatar"
             >
-              <div className="mt-2 rounded-full w-14">
+              <div className="rounded-full w-14">
                 <Image
                   src={avatar}
                   alt="Profile"
@@ -95,7 +95,7 @@ export default function Header() {
                 {user?._id === undefined ? (
                   <a
                     className="font-sans text-lg font-medium text-black"
-                    href="/login"
+                    href="/register"
                   >
                     Üye Ol
                   </a>

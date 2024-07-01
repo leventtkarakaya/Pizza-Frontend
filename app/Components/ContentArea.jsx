@@ -3,17 +3,10 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { setPizza } from "../context/Slice/pizzaSlice";
 import loading from "@/public/loading.gif";
-import {
-  setCartPizza,
-  addToCart,
-  removeToCart,
-} from "@/app/context/Slice/cardSlice";
+
 export default function ContentArea() {
   const [pizzas, setPizzas] = useState([]);
-  const dispatch = useDispatch();
   const [uploading, setUploading] = useState(false);
   const getPizzas = async () => {
     try {
@@ -22,15 +15,24 @@ export default function ContentArea() {
         "http://localhost:5000/api/pizza/get-pizza"
       );
       setUploading(false);
-      console.log("🚀 ~ getPizzas ~ response:", response);
       if (response.status === 200) {
-        dispatch(setPizza(response.data.pizza));
-        dispatch(setCartPizza(response.data.pizza));
         setPizzas(response.data.pizza);
       }
-      console.log("🚀 ~ getPizzas ~ dispatch:", dispatch);
     } catch (error) {
       console.log("🚀 ~ getPizzas ~ error:", error);
+      if (error) {
+        switch (error.response.status) {
+          case 500:
+            toast.error("Server Error");
+            break;
+          case 404:
+            toast.error("Not Found");
+            break;
+          default:
+            toast.error("Something went wrong");
+            break;
+        }
+      }
     }
   };
   useEffect(() => {
@@ -39,9 +41,6 @@ export default function ContentArea() {
       setPizzas();
     };
   }, []);
-  const controller = useSelector((state) => state.cart.cartItem);
-  console.log("🚀 ~ ContentArea ~ controller:", controller);
-  console.log("🚀 ~ ContentArea ~ pizzas:", pizzas);
   return (
     <div className="container mx-auto mt-6 ">
       <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8 ">
@@ -75,7 +74,6 @@ export default function ContentArea() {
                   <Link href={`/pizzaDetails/${item._id}`}>
                     <button
                       type="button"
-                      onClick={() => dispatch(setCartPizza(item._id))}
                       className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
                       Daha Fazla
@@ -86,13 +84,13 @@ export default function ContentArea() {
             );
           })
         ) : (
-          <div className="flex items-center justify-center w-full ">
+          <div className="grid col-span-full place-items-center">
             <Image
               src={loading}
               alt="loading"
               width={200}
               height={200}
-              className="object-cover w-full "
+              className=""
             />
           </div>
         )}

@@ -22,7 +22,6 @@ export default function page() {
   const handleFileChange = (e) => {
     setUploading.image(e.target.files[0]);
   };
-
   const dispatch = useDispatch();
   const [uploading, setUploading] = useState(false);
   const handleValueChange = (e) => {
