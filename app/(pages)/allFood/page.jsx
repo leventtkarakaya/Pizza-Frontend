@@ -84,7 +84,7 @@ export default function page() {
                     : "px-12 py-6 bg-gradient-to-r bg-[#d1411d] text-white font-sans font-semibold rounded-md"
                 }
                 onClick={() => handleClick(item.id, item.value)}
-                key={item.id}
+                key={Math.random()}
               >
                 {item.name}
               </button>

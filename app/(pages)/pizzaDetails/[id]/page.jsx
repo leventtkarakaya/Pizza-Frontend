@@ -5,7 +5,6 @@ import axios from "axios";
 import { useParams } from "next/navigation";
 import { FaPlus, FaMinus } from "react-icons/fa6";
 import { useSelector, useDispatch } from "react-redux";
-import { setPizza } from "@/app/context/Slice/pizzaSlice";
 import {
   setCartPizza,
   addToCart,
@@ -17,6 +16,8 @@ export default function page() {
   const [uploading, setUploading] = useState(false);
   const params = useParams();
   const dispatch = useDispatch();
+  const controller = useSelector((state) => state.cart.pizza);
+  const contorller2 = useSelector((state) => state.cart.cartItem);
   const handleID = async () => {
     setUploading(true);
     try {
@@ -26,16 +27,20 @@ export default function page() {
       setUploading(false);
       if (response.status === 200) {
         setPizzaDetails(response.data.pizza);
-        dispatch(setPizza(response.data.pizza));
+        dispatch(setCartPizza(response.data.pizza));
         return response.data.pizza;
       }
     } catch (error) {
       console.log("🚀 ~ handleID ~ error:", error);
     }
   };
+
   useEffect(() => {
     handleID();
   }, []);
+
+  console.log("🚀 ~ page ~ contorller2:", contorller2);
+  console.log("🚀 ~ controller:", controller);
   return (
     <div>
       {uploading === false ? (
@@ -94,7 +99,7 @@ export default function page() {
                   <h1 className="text-xl font-bold text-gray-700">$220</h1>
                   <div className="flex gap-2">
                     <button
-                      onClick={() => dispatch(removeToCart(pizzaDetails))}
+                      onClick={() => dispatch(removeToCart(pizzaDetails?._id))}
                       className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
                     >
                       <FaMinus />
@@ -103,7 +108,7 @@ export default function page() {
                       {0}
                     </button>
                     <button
-                      onClick={() => dispatch(addToCart(pizzaDetails))}
+                      onClick={() => dispatch(addToCart(pizzaDetails?._id))}
                       className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
                     >
                       <FaPlus />

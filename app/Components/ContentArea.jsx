@@ -4,7 +4,6 @@ import Link from "next/link";
 import Image from "next/image";
 import axios from "axios";
 import loading from "@/public/loading.gif";
-
 export default function ContentArea() {
   const [pizzas, setPizzas] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -41,6 +40,7 @@ export default function ContentArea() {
       setPizzas();
     };
   }, []);
+
   return (
     <div className="container mx-auto mt-6 ">
       <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8 ">

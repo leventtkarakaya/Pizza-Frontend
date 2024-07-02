@@ -56,9 +56,7 @@ export default function page() {
     }
   };
   const handleOnSubmit = async (e) => {
-    debugger;
     e.preventDefault();
-
     try {
       const response = await axios.post(
         "http://localhost:5000/api/pizza/addFood",
