@@ -2,11 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   pizza: null,
-  cartItem: {
-    _id: 0,
-    price: 0,
-    quantity: 0,
-  },
+  cart: [],
 };
 
 const cartSlice = createSlice({
@@ -18,27 +14,38 @@ const cartSlice = createSlice({
     },
     addToCart: (state, action) => {
       const pizzaId = action.payload._id;
-      if (state.cartItem._id === pizzaId) {
-        state.cartItem.quantity += 1;
+      const existingCartItemIndex = state.cart.findIndex(
+        (item) => item._id === pizzaId
+      );
+      if (existingCartItemIndex !== -1) {
+        state.cart[existingCartItemIndex].quantity += 1;
+        state.pizza = {
+          ...state.pizza,
+          quantity: state.cart[existingCartItemIndex].quantity,
+        };
       } else {
-        state.cartItem = {
-          _id: pizzaId,
-          price: action.payload.price,
+        state.cart.push({
+          ...action.payload,
+          quantity: 1,
+        });
+        state.pizza = {
+          ...state.pizza,
           quantity: 1,
         };
       }
     },
     removeToCart: (state, action) => {
+      debugger;
       const pizzaId = action.payload._id;
-      if (state.cartItem._id === pizzaId) {
-        if (state.cartItem.quantity > 1) {
-          state.cartItem.quantity -= 1;
-        } else {
-          state.cartItem = {
-            _id: 0,
-            price: 0,
-            quantity: 0,
-          };
+      const existingCartItemIndex = state.cart.findIndex(
+        (item) => item._id === pizzaId
+      );
+      if (existingCartItemIndex !== -1) {
+        if (state.pizza.quantity > 0) {
+          state.pizza.quantity -= 1;
+        }
+        if (state.pizza.quantity === 0) {
+          state.cart.splice(existingCartItemIndex, 1);
         }
       }
     },

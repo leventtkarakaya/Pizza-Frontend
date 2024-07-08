@@ -78,13 +78,13 @@ export default function page() {
           <div className="flex justify-around w-full btn-nav max-md:gap-4">
             {Pagination.map((item) => (
               <button
+                key={item.id}
                 className={
                   categories === item.id
                     ? "px-12 py-6 bg-gradient-to-r from-[#e6e5e4] to-[#d1411d] text-white font-sans font-semibold rounded-md "
                     : "px-12 py-6 bg-gradient-to-r bg-[#d1411d] text-white font-sans font-semibold rounded-md"
                 }
                 onClick={() => handleClick(item.id, item.value)}
-                key={Math.random()}
               >
                 {item.name}
               </button>
@@ -101,10 +101,7 @@ export default function page() {
                         key={item._id}
                       >
                         <div className="relative mx-4 -mt-6 overflow-hidden text-white shadow-lg h-60 rounded-xl bg-blue-gray-500 bg-clip-border shadow-blue-gray-500/40 ">
-                          <Link
-                            href={`/pizzaDetails/${item._id}`}
-                            key={item._id}
-                          >
+                          <Link href={`/pizzaDetails/${item._id}`}>
                             <Image
                               src={item.image}
                               alt="quattro stagioni"

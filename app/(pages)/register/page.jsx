@@ -45,13 +45,11 @@ export default function page() {
         "http://localhost:5000/api/v1/image/upload-image",
         formData
       );
-      console.log("🚀 ~ handleImage ~ data:", data);
       setUploading(false);
       if (uploading === false) {
         dispatch(setImage({ url: data.url, public_id: data.public_id }));
         setUser({ ...user, image: data.url });
       }
-      console.log(data);
     } catch (error) {
       console.log("🚀 ~ handleImage ~ error:", error);
     }
@@ -84,7 +82,24 @@ export default function page() {
         router.push("/login");
       }
     } catch (error) {
-      console.log("🚀 ~ handleSubmit ~ error:", error);
+      if (error) {
+        switch (error.response.status) {
+          case 400:
+            window.alert(error.response.data.message);
+            break;
+          case 401:
+            window.alert(error.response.data.message);
+            break;
+          case 404:
+            window.alert(error.response.data.message);
+            break;
+          case 500:
+            window.alert(error.response.data.message);
+            break;
+          default:
+            break;
+        }
+      }
     }
   };
 

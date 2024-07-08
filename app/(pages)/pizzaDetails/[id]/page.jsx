@@ -16,9 +16,11 @@ export default function page() {
   const [uploading, setUploading] = useState(false);
   const params = useParams();
   const dispatch = useDispatch();
-  const controller = useSelector((state) => state.cart.pizza);
-  const contorller2 = useSelector((state) => state.cart.cartItem);
-  const handleID = async () => {
+  const statePizzaCart = useSelector((state) => state.cart.pizza);
+  const stateCartCart = useSelector((state) => state.cart.cart);
+  console.log("🚀 ~ page ~ controller:", statePizzaCart);
+  console.log("🚀 ~ page ~ stateCartCart:", stateCartCart);
+  const handleOnSubmitID = async () => {
     setUploading(true);
     try {
       const response = await axios.get(
@@ -31,21 +33,32 @@ export default function page() {
         return response.data.pizza;
       }
     } catch (error) {
-      console.log("🚀 ~ handleID ~ error:", error);
+      console.log("🚀 ~ handleOnSubmitID ~ error:", error);
+      if (error) {
+        switch (error.response.status) {
+          case 500:
+            toast.error("İnternet baglantınızı kontrol edin");
+            break;
+          case 404:
+            toast.error("Bu pizza bulunamadı");
+            break;
+          default:
+            toast.error("Birşeyler ters gitti");
+            break;
+        }
+      }
     }
   };
 
   useEffect(() => {
-    handleID();
+    handleOnSubmitID();
   }, []);
 
-  console.log("🚀 ~ page ~ contorller2:", contorller2);
-  console.log("🚀 ~ controller:", controller);
   return (
     <div>
       {uploading === false ? (
         pizzaDetails && (
-          <div className="px-5 py-4 " key={pizzaDetails._id}>
+          <div className="px-5 py-4 font-sans" key={pizzaDetails._id}>
             <div className="flex items-center bg-white w-full h-[50vh] overflow-hidden  rounded-lg shadow-lg ">
               <div className="flex justify-center w-3/5 bg-cover">
                 <Image
@@ -58,7 +71,7 @@ export default function page() {
                 />
               </div>
               <div className="w-4/5 p-4">
-                <h1 className="text-2xl font-bold text-gray-900">
+                <h1 className="text-2xl font-bold text-gray-900 ">
                   {pizzaDetails.name}
                 </h1>
                 <p className="mt-2 text-sm text-gray-600">
@@ -95,25 +108,39 @@ export default function page() {
                     />
                   </div>
                 </div>
-                <div className="flex justify-between mt-3 item-center">
-                  <h1 className="text-xl font-bold text-gray-700">$220</h1>
-                  <div className="flex gap-2">
+                {/* Price */}
+                <div className="flex justify-between mt-3 item-center max-md:flex-col max-md:gap-y-5">
+                  <select className="w-4/5 max-w-xs cursor-pointer select select-ghost bg-slate-300">
+                    <option disabled>Üçretlerimiz</option>
+                    <option>{statePizzaCart?.smallPrice}</option>
+                    <option>{statePizzaCart?.mediumPrice}</option>
+                    <option>{statePizzaCart?.largePrice}</option>
+                  </select>
+                  <div className="flex justify-end w-1/5 gap-3">
                     <button
-                      onClick={() => dispatch(removeToCart(pizzaDetails?._id))}
-                      className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
+                      onClick={() => dispatch(removeToCart(pizzaDetails))}
+                      className="px-3 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
                     >
                       <FaMinus />
                     </button>
                     <button className="px-3 py-2 text-xs font-bold text-white uppercase bg-gray-800 rounded">
-                      {0}
+                      {statePizzaCart?.quantity || 0}
                     </button>
                     <button
-                      onClick={() => dispatch(addToCart(pizzaDetails?._id))}
-                      className="px-2 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
+                      onClick={() => dispatch(addToCart(pizzaDetails))}
+                      className="px-3 py-1 text-xs font-bold text-white uppercase bg-gray-800 rounded"
                     >
                       <FaPlus />
                     </button>
                   </div>
+                </div>
+                <div className="flex items-center justify-end ">
+                  <button
+                    onClick={() => dispatch(addToCart(pizzaDetails))}
+                    className="px-5 py-3 mt-4 text-xs font-bold text-white uppercase bg-gray-800 rounded lg:-ml-5 "
+                  >
+                    Sepete Ekle
+                  </button>
                 </div>
               </div>
             </div>

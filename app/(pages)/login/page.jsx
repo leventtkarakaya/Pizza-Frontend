@@ -38,6 +38,7 @@ export default function page() {
         }
       );
       setUploading(false);
+      console.log("🚀 ~ handleOnSubmit ~ response:", response);
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         dispatch(setUserController(response.data.user));

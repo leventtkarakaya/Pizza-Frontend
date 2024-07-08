@@ -40,6 +40,7 @@ export default function ProtectedRoute({ children }) {
     if (!user) {
       getUser();
     }
+    console.log("🚀 ~ ProtectedRoute ~ user:", user);
   }, [user]);
 
   if (localStorage.getItem("token")) {
