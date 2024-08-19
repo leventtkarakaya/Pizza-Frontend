@@ -93,6 +93,7 @@ export default function page() {
         </p>
         <form onSubmit={handleOnSubmit} encType="multipart/form-data">
           <div className="grid gap-4 mt-8 lg:grid-cols-2">
+            {/* name */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
                 İsim
@@ -107,6 +108,7 @@ export default function page() {
                 placeholder="Pizza adını giriniz"
               />
             </div>
+            {/* small */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
                 Küçük Boy
@@ -121,6 +123,7 @@ export default function page() {
                 placeholder="Kuçuk Boy Fiyatını giriniz"
               />
             </div>
+            {/* medium */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
                 Orta Boy
@@ -135,6 +138,7 @@ export default function page() {
                 placeholder="Orta Boy Fiyatını giriniz"
               />
             </div>
+            {/* large */}
             <div>
               <label className="block mb-1 text-sm font-medium text-gray-700">
                 Büyük Boy
@@ -163,6 +167,7 @@ export default function page() {
                 />
               </label>
             </div>
+            {/* category */}
             <div className="mt-3">
               <select
                 className="w-full max-w-xs select select-ghost input-bordered"
@@ -179,6 +184,7 @@ export default function page() {
               </select>
             </div>
           </div>
+          {/* description */}
           <textarea
             className="w-full mt-10 textarea textarea-bordered"
             name="description"

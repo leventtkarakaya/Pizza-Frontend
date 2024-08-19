@@ -11,7 +11,10 @@
   },
   "dependencies": {
     "@reduxjs/toolkit": "^2.2.5",
+    "@stripe/react-stripe-js": "^2.7.3",
+    "@stripe/stripe-js": "^4.1.0",
     "axios": "^1.7.2",
+    "dotenv": "^16.4.5",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
     "next": "14.2.4",
@@ -24,6 +27,7 @@
     "react-redux": "^9.1.2",
     "react-scroll": "^1.9.0",
     "react-toastify": "^10.0.5",
+    "redux-persist": "^6.0.0",
     "swiper": "^11.1.4"
   },
   "devDependencies": {

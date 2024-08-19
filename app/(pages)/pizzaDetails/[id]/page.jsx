@@ -16,10 +16,12 @@ export default function page() {
   const [uploading, setUploading] = useState(false);
   const params = useParams();
   const dispatch = useDispatch();
+
   const statePizzaCart = useSelector((state) => state.cart.pizza);
   const stateCartCart = useSelector((state) => state.cart.cart);
   console.log("🚀 ~ page ~ controller:", statePizzaCart);
   console.log("🚀 ~ page ~ stateCartCart:", stateCartCart);
+
   const handleOnSubmitID = async () => {
     setUploading(true);
     try {
@@ -27,9 +29,9 @@ export default function page() {
         `http://localhost:5000/api/pizza/getPizza/${params.id}`
       );
       setUploading(false);
+      console.log("🚀 ~ handleOnSubmitID ~ response:", response);
       if (response.status === 200) {
         setPizzaDetails(response.data.pizza);
-        dispatch(setCartPizza(response.data.pizza));
         return response.data.pizza;
       }
     } catch (error) {
@@ -49,11 +51,35 @@ export default function page() {
       }
     }
   };
+  const pizzaHandleSize = (id, value) => {
+    debugger;
+    typeof value === "undefined"
+      ? dispatch(
+          setCartPizza({ ...statePizzaCart, price: statePizzaCart?.smallPrice })
+        )
+      : null;
+    if (pizzaDetails?.smallPrice) {
+      dispatch(setCartPizza({ ...statePizzaCart, price: value }));
+    }
+    if (pizzaDetails?.mediumPrice) {
+      dispatch(setCartPizza({ ...statePizzaCart, price: value }));
+    }
+    if (pizzaDetails?.largePrice) {
+      dispatch(setCartPizza({ ...statePizzaCart, price: value }));
+    }
+    console.log("🚀 ~ pizzaHandleSize ~ stateCartCart:", value);
+  };
+  const pizzaHandleDrink = (id, value) => {
+    dispatch(setCartPizza({ ...statePizzaCart, drink: value }));
+    console.log("🚀 ~ pizzaHandleDrink ~ stateCartCart:", value);
+  };
 
   useEffect(() => {
     handleOnSubmitID();
+    pizzaHandleSize(0, 100);
+    pizzaHandleDrink("Cola", "Cola");
   }, []);
-
+  console.log("🚀 ~ page ~ pizzaDetails:", pizzaDetails);
   return (
     <div>
       {uploading === false ? (
@@ -67,7 +93,6 @@ export default function page() {
                   width={200}
                   height={200}
                   className="object-cover"
-                  decoding="async"
                 />
               </div>
               <div className="w-4/5 p-4">
@@ -110,11 +135,47 @@ export default function page() {
                 </div>
                 {/* Price */}
                 <div className="flex justify-between mt-3 item-center max-md:flex-col max-md:gap-y-5">
-                  <select className="w-4/5 max-w-xs cursor-pointer select select-ghost bg-slate-300">
-                    <option disabled>Üçretlerimiz</option>
-                    <option>{statePizzaCart?.smallPrice}</option>
-                    <option>{statePizzaCart?.mediumPrice}</option>
-                    <option>{statePizzaCart?.largePrice}</option>
+                  <select
+                    className="w-4/5 max-w-xs cursor-pointer select select-ghost bg-slate-300"
+                    onChange={(e) =>
+                      pizzaHandleSize(e.target.id, e.target.value)
+                    }
+                  >
+                    <option disabled selected>
+                      Lütfen Bir Boy Seçin
+                    </option>
+                    <option
+                      id="small"
+                      value={statePizzaCart?.smallPrice}
+                      defaultValue={statePizzaCart?.smallPrice}
+                    >
+                      {statePizzaCart?.smallPrice}
+                    </option>
+                    <option id="medium" value={statePizzaCart?.mediumPrice}>
+                      {statePizzaCart?.mediumPrice}
+                    </option>
+                    <option id="large" value={statePizzaCart?.largePrice}>
+                      {statePizzaCart?.largePrice}
+                    </option>
+                  </select>
+                  <select
+                    className="w-4/5 max-w-xs cursor-pointer select select-ghost bg-slate-300"
+                    onChange={(e) =>
+                      pizzaHandleDrink(e.target.id, e.target.value)
+                    }
+                  >
+                    <option disabled selected>
+                      Lütfen Bir İçecek Seçin
+                    </option>
+                    <option id="Cola" value={"Cola"} defaultChecked>
+                      Cola
+                    </option>
+                    <option id="Pepsi" value={"Pepsi"}>
+                      Pepsi
+                    </option>
+                    <option id="Fanta" value={"Fanta"}>
+                      Fanta
+                    </option>
                   </select>
                   <div className="flex justify-end w-1/5 gap-3">
                     <button

@@ -263,9 +263,9 @@ export default function page() {
               Üye Ol
             </button>
             <Link href="/login">
-              <span className="text-sm ml-2 font-sans hover:text-[#d1411d] cursor-pointer">
+              <p className="text-sm ml-2 font-sans hover:text-[#d1411d] cursor-pointer">
                 Zaten bir hesabın var mı?
-              </span>
+              </p>
             </Link>
           </form>
         </div>

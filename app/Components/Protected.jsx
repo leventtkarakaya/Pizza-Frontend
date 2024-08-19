@@ -7,8 +7,13 @@ import { setUserController } from "@/app/context/Slice/userSlice";
 
 export default function ProtectedRoute({ children }) {
   const dispatch = useDispatch();
+  const localController = [];
   const user = useSelector((state) => state.user.usersave);
   const router = useRouter();
+  const localStorageItem = localStorage.getItem("token");
+  localController.push(localStorageItem);
+  console.log("🚀 ~ ProtectedRoute ~ localController:", localController);
+
   const getUser = async () => {
     try {
       const response = await axios.get(

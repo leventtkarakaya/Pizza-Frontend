@@ -6,6 +6,8 @@ import axios from "axios";
 import loading from "@/public/loading.gif";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../context/Slice/cardSlice";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 export default function ContentArea() {
   const [pizzas, setPizzas] = useState([]);
   const [uploading, setUploading] = useState(false);
@@ -17,21 +19,22 @@ export default function ContentArea() {
         "http://localhost:5000/api/pizza/get-pizza"
       );
       setUploading(false);
+      console.log("🚀 ~ getPizzas ~ response:", response);
       if (response.status === 200) {
         setPizzas(response.data.pizza);
       }
     } catch (error) {
       console.log("🚀 ~ getPizzas ~ error:", error);
       if (error) {
-        switch (error.response.status) {
+        switch (error.status) {
           case 500:
-            toast.error("Server Error");
+            toast.error("İnternet baglantınızı kontrol edin");
             break;
           case 404:
-            toast.error("Not Found");
+            toast.error("Pizzalar bulunamadı");
             break;
           default:
-            toast.error("Something went wrong");
+            toast.error("Birşeyler ters gitti");
             break;
         }
       }
@@ -40,7 +43,6 @@ export default function ContentArea() {
   useEffect(() => {
     getPizzas();
   }, []);
-
   return (
     <div className="container mx-auto mt-6 ">
       <div className="grid w-full grid-cols-4 px-3 gap-x-16 gap-y-5 max-sm:grid-cols-1 max-lg:grid-cols-2 max-sm:px-8 ">
@@ -59,6 +61,7 @@ export default function ContentArea() {
                       width={200}
                       height={200}
                       className="object-cover mt-6 ml-11 "
+                      onClick={() => dispatch(addToCart(item))}
                     />
                   </Link>
                 </div>
@@ -77,7 +80,7 @@ export default function ContentArea() {
                       onClick={() => dispatch(addToCart(item))}
                       className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                     >
-                      Daha Fazla
+                      Sepete Ekle
                     </button>
                   </Link>
                 </div>
@@ -96,6 +99,7 @@ export default function ContentArea() {
           </div>
         )}
       </div>
+      <ToastContainer />
     </div>
   );
 }

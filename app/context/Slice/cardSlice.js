@@ -19,19 +19,27 @@ const cartSlice = createSlice({
       );
       if (existingCartItemIndex !== -1) {
         state.cart[existingCartItemIndex].quantity += 1;
+        state.cart[existingCartItemIndex].price = state.pizza.price;
+        state.cart[existingCartItemIndex].drink = state.pizza.drink;
         state.pizza = {
           ...state.pizza,
           quantity: state.cart[existingCartItemIndex].quantity,
         };
+        return;
       } else {
         state.cart.push({
           ...action.payload,
           quantity: 1,
+          drink: null,
+          price: null,
         });
         state.pizza = {
-          ...state.pizza,
+          ...action.payload,
           quantity: 1,
+          drink: null,
+          price: null,
         };
+        return;
       }
     },
     removeToCart: (state, action) => {

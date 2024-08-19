@@ -22,9 +22,11 @@ export default function page() {
       ...users,
       [e.target.name]: e.target.value,
     });
+    console.log(users);
   };
 
   const handleOnSubmit = async (e) => {
+    debugger;
     e.preventDefault();
     try {
       setUploading(true);
@@ -46,25 +48,6 @@ export default function page() {
       }
     } catch (error) {
       console.log("🚀 ~ handleOnSubmit ~ error:", error);
-      if (error) {
-        switch (error.response.status) {
-          case 400:
-            window.alert(error.response.data.message);
-            break;
-          case 401:
-            window.alert(error.response.data.message);
-            break;
-          case 404:
-            window.alert(error.response.data.message);
-            break;
-          case 500:
-            window.alert(error.response.data.message);
-            break;
-          default:
-            window.alert(error.response.data.message);
-            break;
-        }
-      }
     }
   };
 
@@ -145,9 +128,9 @@ export default function page() {
               Giriş Yap
             </button>
             <Link href="/register">
-              <span className="text-sm ml-2 font-sans hover:text-[#d1411d] cursor-pointer">
+              <p className="text-sm ml-2 font-sans hover:text-[#d1411d] cursor-pointer">
                 Üye olmak ister misiniz?
-              </span>
+              </p>
             </Link>
           </form>
         </div>

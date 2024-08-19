@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
-import pizaa from "@/public/tonno.webp";
-import loading from "@/public/loading.gif";
 import loadingImage from "@/public/loadingImage.gif";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/context/Slice/cardSlice";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { EffectCoverflow, Pagination } from "swiper/modules";
 
@@ -15,6 +15,7 @@ import "swiper/css/pagination";
 export default function page() {
   const [uploading, setUploading] = useState(false);
   const [cart, setCart] = useState([]);
+  const dispatch = useDispatch();
   const favorite = async () => {
     debugger;
     try {
@@ -38,6 +39,7 @@ export default function page() {
     };
   }, []);
   console.log("🚀 ~ favorite ~ cart:", cart);
+
   return (
     <div className="px-5 py-5">
       <div className="flex">
@@ -75,6 +77,7 @@ export default function page() {
                     width={300}
                     height={300}
                     className="object-cover object-center "
+                    onClick={() => dispatch(addToCart(cart[0]))}
                     decoding="async"
                   />
                 </Link>
@@ -95,6 +98,7 @@ export default function page() {
                     width={300}
                     height={300}
                     className="object-cover object-center "
+                    onClick={() => dispatch(addToCart(cart[1]))}
                     decoding="async"
                   />
                 </Link>
@@ -115,6 +119,7 @@ export default function page() {
                     width={300}
                     height={300}
                     className="object-cover object-center "
+                    onClick={() => dispatch(addToCart(cart[2]))}
                     decoding="async"
                   />
                 </Link>
@@ -135,6 +140,7 @@ export default function page() {
                     width={300}
                     height={300}
                     className="object-cover object-center "
+                    onClick={() => dispatch(addToCart(cart[3]))}
                     decoding="async"
                   />
                 </Link>
@@ -155,6 +161,7 @@ export default function page() {
                     width={300}
                     height={300}
                     className="object-cover object-center"
+                    onClick={() => dispatch(addToCart(cart[4]))}
                     decoding="async"
                   />
                 </Link>

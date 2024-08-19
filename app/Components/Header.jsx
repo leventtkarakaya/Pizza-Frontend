@@ -103,19 +103,19 @@ export default function Header() {
             href="/allFood"
             className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
-            <span>Pizzalar</span>
+            <p>Pizzalar</p>
           </Link>
           <Link
             href="/favoritePizza"
             className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
-            <span>Favoriler</span>
+            <p>Favoriler</p>
           </Link>
           <Link
             href="/"
             className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
           >
-            <span>Sevilenler</span>
+            <p>Sevilenler</p>
           </Link>
           {/* Admin */}
           {user?.role === "admin" && (
@@ -123,7 +123,7 @@ export default function Header() {
               href="/addFood"
               className="text-[20px] font-medium hover:text-[#d1411d] max-sm:hidden"
             >
-              <span>Pizza Ekle</span>
+              <p>Pizza Ekle</p>
             </Link>
           )}
           <Link href={"/sipariscart"}>
@@ -155,34 +155,48 @@ export default function Header() {
               tabIndex={0}
               className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-white rounded-box w-52"
             >
-              <li>
-                {user?._id !== undefined && (
-                  <a
-                    className="font-sans text-lg font-medium text-black"
-                    onClick={openModal}
-                  >
-                    Profil
-                  </a>
-                )}
-              </li>
-              <li>
-                {user?._id === undefined ? (
+              {user?._id !== undefined ? (
+                <li>
+                  {user && user?._id !== undefined ? (
+                    <a
+                      className="font-sans text-lg font-medium text-black"
+                      onClick={openModal}
+                    >
+                      Profil
+                    </a>
+                  ) : (
+                    <a className="hidden"></a>
+                  )}
+                </li>
+              ) : (
+                <li className="hidden"></li>
+              )}
+              {user && user?._id === undefined ? (
+                <li>
                   <a
                     className="font-sans text-lg font-medium text-black"
                     href="/register"
                   >
                     Üye Ol
                   </a>
-                ) : (
-                  <a className="font-sans text-lg font-medium text-black">
-                    Ayarlar
+                </li>
+              ) : (
+                <li>
+                  <a
+                    className="font-sans text-lg font-medium text-black"
+                    href="/login"
+                  >
+                    Giriş Yap
                   </a>
-                )}
-              </li>
+                </li>
+              )}
               <li>
                 <a
                   className="font-sans text-lg font-medium text-black"
-                  onClick={() => dispatch(setUserController(null))}
+                  onClick={() =>
+                    localStorage.clear("persist:root") &&
+                    window.location.reload()
+                  }
                 >
                   Çıkış
                 </a>

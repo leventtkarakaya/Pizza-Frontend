@@ -20,7 +20,7 @@ export default function Footer() {
               className="text-white transition hover:text-gray-700/75"
               href="/hakkimizda"
             >
-              Hakkımızda
+              <p>Hakkımızda</p>
             </a>
           </li>
 
@@ -29,7 +29,7 @@ export default function Footer() {
               className="text-white transition hover:text-gray-700/75"
               href="/bayilerimiz"
             >
-              Bayilerimiz
+              <p>Bayilerimiz</p>
             </a>
           </li>
 
@@ -38,7 +38,7 @@ export default function Footer() {
               className="text-white transition hover:text-gray-700/75"
               href="#"
             >
-              İletişim
+              <p>İletişim</p>
             </a>
           </li>
 
@@ -47,7 +47,7 @@ export default function Footer() {
               className="text-white transition hover:text-gray-700/75"
               href="#"
             >
-              Blog
+              <p>Blog</p>
             </a>
           </li>
         </ul>
@@ -98,7 +98,6 @@ export default function Footer() {
               </svg>
             </a>
           </li>
-
           <li>
             <a
               href="#"

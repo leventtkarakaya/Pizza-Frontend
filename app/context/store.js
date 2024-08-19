@@ -1,13 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import userSlice from "./Slice/userSlice";
-import imageSlice from "./Slice/imageSlice";
-import pizzaSlice from "./Slice/pizzaSlice";
-import cardSlice from "./Slice/cardSlice";
-export const store = configureStore({
-  reducer: {
-    user: userSlice,
-    image: imageSlice,
-    pizza: pizzaSlice,
-    cart: cardSlice,
-  },
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import rootReducers from "./reducers";
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+const persistedReducer = persistReducer(persistConfig, rootReducers);
+const store = configureStore({
+  reducer: persistedReducer,
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }),
 });
+
+const persistor = persistStore(store);
+
+export { store, persistor };

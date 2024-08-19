@@ -4,6 +4,8 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import loading from "@/public/loading.gif";
+import { useDispatch } from "react-redux";
+import { addToCart } from "@/app/context/Slice/cardSlice";
 export default function page() {
   const [categories, setCategories] = useState(1);
   const [category, setCategory] = useState({
@@ -11,6 +13,7 @@ export default function page() {
   });
   const [foods, setFoods] = useState([]);
   const [uploading, setUploading] = useState(false);
+  const dispatch = useDispatch();
   const Pagination = [
     {
       id: 1,
@@ -108,6 +111,7 @@ export default function page() {
                               width={200}
                               height={200}
                               className="object-cover mt-6 ml-11 "
+                              onClick={() => dispatch(addToCart(item))}
                             />
                           </Link>
                         </div>
@@ -122,6 +126,7 @@ export default function page() {
                         <div className="p-6 pt-0">
                           <button
                             type="button"
+                            onClick={() => dispatch(addToCart(item))}
                             className="select-none w-full rounded-lg bg-gradient-to-r from-[#e9d5d0] to-[#d1411d] py-3 px-6 text-center align-middle font-sans text-xs font-bold uppercase text-white shadow-md shadow-blue-500/20 transition-all hover:shadow-lg hover:shadow-blue-500/40 focus:opacity-[0.85] focus:shadow-none active:opacity-[0.85] active:shadow-none disabled:pointer-events-none disabled:opacity-50 disabled:shadow-none"
                           >
                             Siparişe Ekle
