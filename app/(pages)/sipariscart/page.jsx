@@ -100,17 +100,6 @@ export default function page() {
         ).redirectToCheckout({
           sessionId: response.data.sessionId,
         });
-
-        toast.success("Siparisiniz Alındı!", {
-          position: "top-right",
-          autoClose: 1000,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
         router.push("/success");
       }
     } catch (error) {

@@ -10,8 +10,6 @@ import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { setImage } from "@/app/context/Slice/imageSlice";
-import { toast, ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 export default function page() {
   const [user, setUser] = useState({
     name: "",
@@ -78,7 +76,6 @@ export default function page() {
       };
       if (response.status === 201 && uploading === false) {
         Cookies.set("user", localStorageToken.token);
-        toast.success(response.message);
         router.push("/login");
       }
     } catch (error) {
@@ -269,7 +266,6 @@ export default function page() {
             </Link>
           </form>
         </div>
-        <ToastContainer />
       </div>
     </div>
   );
